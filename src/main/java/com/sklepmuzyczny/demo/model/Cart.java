@@ -1,12 +1,10 @@
-package com.sklepmuzyczny.demo.cart;
+package com.sklepmuzyczny.demo.model;
 
-import com.sklepmuzyczny.demo.orders.Order;
-import com.sklepmuzyczny.demo.products.Product;
 import lombok.Getter;
 import lombok.Setter;
 
 
-import javax.persistence.ManyToOne;
+//import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +12,10 @@ import java.util.List;
 @Setter
 public class Cart {
 
-    @ManyToOne
+//    @ManyToOne
     private List<Product> products = new ArrayList<>();
 
-    @ManyToOne
+//    @ManyToOne
     private List<Order> orders = new ArrayList<>();
 
 }

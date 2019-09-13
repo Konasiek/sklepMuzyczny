@@ -1,9 +1,9 @@
-package com.sklepmuzyczny.demo.products;
+package com.sklepmuzyczny.demo.repository;
 
+import com.sklepmuzyczny.demo.model.Product;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
-
 public interface ProductRepository extends CrudRepository<Product, Long> {
-    Optional<Product> findByName(String product);
+
+
 }

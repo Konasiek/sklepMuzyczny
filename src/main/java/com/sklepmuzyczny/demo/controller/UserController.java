@@ -2,7 +2,7 @@ package com.sklepmuzyczny.demo.controller;
 
 import com.sklepmuzyczny.demo.DTO.UserDTO;
 import com.sklepmuzyczny.demo.model.Customer;
-import com.sklepmuzyczny.demo.service.UserService;
+import com.sklepmuzyczny.demo.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,33 +11,33 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController  {
 
-    UserService userService;
+    CustomerService customerService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Customer> getAllUsers () {
-        List<Customer> list = userService.getUsers();
+        List<Customer> list = customerService.getUsers();
         return list;
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Customer getUserById(@PathVariable("id") Long id) {
-        Customer customer = userService.getUserById(id);
+        Customer customer = customerService.getUserById(id);
         return customer;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public Customer addUser(@RequestBody Customer customer) {
-        userService.addNewUser(customer);
+        customerService.addNewUser(customer);
 
         return customer;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteMessage(@PathVariable("id") long id) {
-        userService.deleteById(id);
+        customerService.deleteById(id);
     }
 
     @PostMapping ("/newUser")
@@ -48,7 +48,7 @@ public class UserController  {
         customer.setLogin(userDTO.getLogin());
         customer.setUserId(userDTO.getUserId());
 
-        userService.addNewUser(customer);
+        customerService.addNewUser(customer);
         return customer;
 
     }

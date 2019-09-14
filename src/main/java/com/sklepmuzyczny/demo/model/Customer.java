@@ -14,7 +14,7 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private Long userId;
+    private Long customerId;
 
     private String login;
     private String password;
@@ -22,8 +22,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long userId, String login, String password) {
-        this.userId = userId;
+    public Customer(Long customerId, String login, String password) {
+        this.customerId = customerId;
         this.login = login;
         this.password = password;
     }

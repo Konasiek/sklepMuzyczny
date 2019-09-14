@@ -1,6 +1,6 @@
 package com.sklepmuzyczny.demo.controller;
 
-import com.sklepmuzyczny.demo.DTO.UserDTO;
+import com.sklepmuzyczny.demo.DTO.CustomerDTO;
 import com.sklepmuzyczny.demo.model.Customer;
 import com.sklepmuzyczny.demo.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +9,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserController  {
+public class CustromerController {
 
     CustomerService customerService;
 
-    public UserController(CustomerService customerService) {
+    public CustromerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
@@ -41,12 +41,12 @@ public class UserController  {
     }
 
     @PostMapping ("/newUser")
-    public Customer addNewUser (@RequestBody UserDTO userDTO) {
+    public Customer addNewUser (@RequestBody CustomerDTO customerDTO) {
 
         Customer customer = new Customer();
-        customer.setPassword(userDTO.getPassword());
-        customer.setLogin(userDTO.getLogin());
-        customer.setUserId(userDTO.getUserId());
+        customer.setPassword(customerDTO.getPassword());
+        customer.setLogin(customerDTO.getLogin());
+        customer.setCustomerId(customerDTO.getCustomerId());
 
         customerService.addNewUser(customer);
         return customer;

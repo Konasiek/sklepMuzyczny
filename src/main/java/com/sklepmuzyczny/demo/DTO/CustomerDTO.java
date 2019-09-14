@@ -6,16 +6,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDTO {
+public class CustomerDTO {
 
-    private Long userId;
-
+    private Long customerId;
     private String login;
     private String password;
 
 
-    public UserDTO(Long userId, String login, String password) {
-        this.userId = userId;
+    public CustomerDTO(Long customerId, String login, String password) {
+        this.customerId = customerId;
         this.login = login;
         this.password = password;
     }

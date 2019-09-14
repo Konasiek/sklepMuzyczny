@@ -15,7 +15,7 @@ public class Delivery {
 
     @Id
     @GeneratedValue
-    private Long orderId;
+    private Long deliveryId;
 
     @OneToOne
     private Customer customer;

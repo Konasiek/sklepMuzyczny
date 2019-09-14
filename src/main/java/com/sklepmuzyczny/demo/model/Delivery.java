@@ -6,16 +6,17 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.OneToOne;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class Category implements Serializable {
-
+public class Delivery {
 
     @Id
     @GeneratedValue
-    private Long CategoryId;
-    private String nameCategory;
+    private Long orderId;
+
+    @OneToOne
+    private Customer customer;
 }

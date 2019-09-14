@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-//import javax.persistence.ManyToOne;
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +12,10 @@ import java.util.List;
 @Setter
 public class Cart {
 
-//    @ManyToOne
+    @ManyToOne
     private List<Product> products = new ArrayList<>();
 
-//    @ManyToOne
-    private List<Order> orders = new ArrayList<>();
+    @ManyToOne
+    private List<Delivery> orders = new ArrayList<>();
 
 }

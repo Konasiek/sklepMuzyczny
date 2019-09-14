@@ -3,26 +3,26 @@ package com.sklepmuzyczny.demo.model;
 import lombok.Getter;
 import lombok.Setter;
 
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-//@Entity
+@Entity
 @Getter
 @Setter
-public class User {
+public class Customer {
 
-//    @Id
-//    @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long userId;
 
     private String login;
     private String password;
 
-    public User() {
+    public Customer() {
     }
 
-    public User(Long userId, String login, String password) {
+    public Customer(Long userId, String login, String password) {
         this.userId = userId;
         this.login = login;
         this.password = password;

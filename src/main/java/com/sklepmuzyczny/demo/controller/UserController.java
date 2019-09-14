@@ -1,7 +1,7 @@
 package com.sklepmuzyczny.demo.controller;
 
 import com.sklepmuzyczny.demo.DTO.UserDTO;
-import com.sklepmuzyczny.demo.model.User;
+import com.sklepmuzyczny.demo.model.Customer;
 import com.sklepmuzyczny.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,21 +18,21 @@ public class UserController  {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> getAllUsers () {
-        List<User> list = userService.getUsers();
+    public List<Customer> getAllUsers () {
+        List<Customer> list = userService.getUsers();
         return list;
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User getUserById(@PathVariable("id") Long id) {
-        User user = userService.getUserById(id);
-        return user;
+    public Customer getUserById(@PathVariable("id") Long id) {
+        Customer customer = userService.getUserById(id);
+        return customer;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public User addUser(@RequestBody User user) {
-        userService.addNewUser(user);
+    public Customer addUser(@RequestBody Customer customer) {
+        userService.addNewUser(customer);
 
-        return user;
+        return customer;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -41,15 +41,15 @@ public class UserController  {
     }
 
     @PostMapping ("/newUser")
-    public User addNewUser (@RequestBody UserDTO userDTO) {
+    public Customer addNewUser (@RequestBody UserDTO userDTO) {
 
-        User user = new User();
-        user.setPassword(userDTO.getPassword());
-        user.setLogin(userDTO.getLogin());
-        user.setUserId(userDTO.getUserId());
+        Customer customer = new Customer();
+        customer.setPassword(userDTO.getPassword());
+        customer.setLogin(userDTO.getLogin());
+        customer.setUserId(userDTO.getUserId());
 
-        userService.addNewUser(user);
-        return user;
+        userService.addNewUser(customer);
+        return customer;
 
     }
 }

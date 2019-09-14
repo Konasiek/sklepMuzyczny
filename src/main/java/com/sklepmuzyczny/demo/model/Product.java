@@ -4,24 +4,24 @@ import com.sklepmuzyczny.demo.model.Category;
 import lombok.Getter;
 import lombok.Setter;
 
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.Id;
-//import javax.persistence.OneToOne;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 public class Product {
 
-//    @Id
-//    @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long productId;
     private Double productPrice;
     private String productName;
     private String manufacturerName;
 
-//    @OneToOne
+    @OneToOne
     private Category category;
 
 

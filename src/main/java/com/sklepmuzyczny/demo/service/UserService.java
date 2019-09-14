@@ -1,6 +1,6 @@
 package com.sklepmuzyczny.demo.service;
 
-import com.sklepmuzyczny.demo.model.User;
+import com.sklepmuzyczny.demo.model.Customer;
 import com.sklepmuzyczny.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +18,18 @@ public class UserService {
     public UserService() {
     }
 
-    public void addNewUser(User user) {
-        userRepository.save(user);
+    public void addNewUser(Customer customer) {
+        userRepository.save(customer);
     }
 
-    public List<User> getUsers() {
-        List<User> list = (List) userRepository.findAll();
+    public List<Customer> getUsers() {
+        List<Customer> list = (List) userRepository.findAll();
         return list;
     }
 
-    public User getUserById(Long id) {
-        User user = (User) userRepository.findById(id).get();
-        return user;
+    public Customer getUserById(Long id) {
+        Customer customer = (Customer) userRepository.findById(id).get();
+        return customer;
     }
 
     public void deleteById(Long id) {

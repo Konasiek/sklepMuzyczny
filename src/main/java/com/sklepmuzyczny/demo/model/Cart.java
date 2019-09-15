@@ -18,4 +18,6 @@ public class Cart {
     @ManyToOne
     private List<Delivery> orders = new ArrayList<>();
 
+    private Integer amount;
+
 }

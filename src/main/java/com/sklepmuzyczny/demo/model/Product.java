@@ -1,13 +1,10 @@
 package com.sklepmuzyczny.demo.model;
 
-import com.sklepmuzyczny.demo.model.Category;
+
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -21,8 +18,11 @@ public class Product {
     private String productName;
     private String manufacturerName;
 
-    @OneToOne
+    @ManyToOne
     private Category category;
+
+    public Product() {
+    }
 
 
 }

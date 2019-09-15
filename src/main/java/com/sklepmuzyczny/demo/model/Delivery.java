@@ -17,6 +17,6 @@ public class Delivery {
     @GeneratedValue
     private Long deliveryId;
 
-    @OneToOne
+    @OneToOne(mappedBy = "delivery")
     private Customer customer;
 }

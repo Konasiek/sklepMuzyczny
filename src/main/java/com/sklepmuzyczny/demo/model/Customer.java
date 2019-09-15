@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 @Getter
@@ -18,6 +19,9 @@ public class Customer {
 
     private String login;
     private String password;
+
+    @OneToOne
+    private Delivery delivery;
 
     public Customer() {
     }

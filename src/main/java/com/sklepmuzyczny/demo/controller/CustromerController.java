@@ -3,6 +3,7 @@ package com.sklepmuzyczny.demo.controller;
 import com.sklepmuzyczny.demo.DTO.CustomerDTO;
 import com.sklepmuzyczny.demo.model.Customer;
 import com.sklepmuzyczny.demo.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustromerController {
 
+    @Autowired
     CustomerService customerService;
 
     public CustromerController(CustomerService customerService) {
@@ -19,18 +21,18 @@ public class CustromerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Customer> getAllCustomer () {
-        List<Customer> list = customerService.getUsers();
+        List<Customer> list = customerService.getCustomers();
         return list;
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Customer getCustomerById(@PathVariable("id") Long id) {
-        Customer customer = customerService.getUserById(id);
+        Customer customer = customerService.getCustomerById(id);
         return customer;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public Customer addCustomer(@RequestBody Customer customer) {
-        customerService.addNewUser(customer);
+        customerService.addNewCustomer(customer);
 
         return customer;
     }
@@ -48,7 +50,7 @@ public class CustromerController {
         customer.setLogin(customerDTO.getLogin());
         customer.setCustomerId(customerDTO.getCustomerId());
 
-        customerService.addNewUser(customer);
+        customerService.addNewCustomer(customer);
         return customer;
 
     }

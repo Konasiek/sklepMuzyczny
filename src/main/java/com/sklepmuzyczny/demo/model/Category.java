@@ -20,8 +20,15 @@ public class Category implements Serializable {
     private String nameCategory;
 
     @OneToMany
-    private List<Product> listOfProducts = new ArrayList<>();
+    private List<Category> listOfCategories = new ArrayList<>();
 
+    public Category() {
+    }
+
+    public Category(String nameCategory, List<Category> listOfCategories) {
+        this.nameCategory = nameCategory;
+        this.listOfCategories = listOfCategories;
+    }
 
     public Long getCategoryId() {
         return CategoryId;
@@ -39,11 +46,11 @@ public class Category implements Serializable {
         this.nameCategory = nameCategory;
     }
 
-    public List<Product> getListOfProducts() {
-        return listOfProducts;
+    public List<Category> getListOfCategories() {
+        return listOfCategories;
     }
 
-    public void setListOfProducts(List<Product> listOfProducts) {
-        this.listOfProducts = listOfProducts;
+    public void setListOfCategories(List<Category> listOfCategories) {
+        this.listOfCategories = listOfCategories;
     }
 }

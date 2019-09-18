@@ -1,7 +1,6 @@
 package com.sklepmuzyczny.demo.DTO;
 
 
-
 public class CustomerDTO {
 
     private Long customerId;

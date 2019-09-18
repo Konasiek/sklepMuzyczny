@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/customer")
 public class CustromerController {
 
     CustomerService customerService;
@@ -18,10 +18,11 @@ public class CustromerController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Customer> getAllCustomer () {
+    public List<Customer> getAllCustomer() {
         List<Customer> list = customerService.getUsers();
         return list;
     }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Customer getCustomerById(@PathVariable("id") Long id) {
         Customer customer = customerService.getUserById(id);
@@ -40,8 +41,8 @@ public class CustromerController {
         customerService.deleteById(id);
     }
 
-    @PostMapping ("/newCustomer")
-    public Customer addCustomerUser (@RequestBody CustomerDTO customerDTO) {
+    @PostMapping("/newCustomer")
+    public Customer addCustomerUser(@RequestBody CustomerDTO customerDTO) {
 
         Customer customer = new Customer();
         customer.setPassword(customerDTO.getPassword());

@@ -19,7 +19,7 @@ public class CategoryController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Category> getAllCategories() {
-        List<Category> list = categoryService.getCategories();
+        List<Category> list = categoryService.getAllCategories();
         return list;
     }
 
@@ -46,7 +46,7 @@ public class CategoryController {
 
         Category category = new Category();
         category.setNameCategory(categoryDTO.getNameCategory());
-        category.setCategoryId(categoryDTO.getCategoryId());
+
 
         categoryService.addNewCategory(category);
         return category;

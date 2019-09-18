@@ -49,6 +49,7 @@ public class ProductController {
         product.setProductPrice(productDTO.getProductPrice());
         product.setProductName(productDTO.getProductName());
         product.setManufacturerName(productDTO.getManufactureName());
+        product.setCategory(productDTO.getCategory());
 
         productService.addNewProduct(product);
         return product;

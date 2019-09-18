@@ -1,27 +1,21 @@
 package com.sklepmuzyczny.demo.DTO;
 
+import com.sklepmuzyczny.demo.model.Category;
+
 public class ProductDTO {
 
-    private Long productId;
+
     private Double productPrice;
     private String productName;
     private String manufactureName;
+    private Category category;
 
 
-    public ProductDTO(Long productId, Double productPrice, String productName, String manufactureName) {
-        this.productId = productId;
+    public ProductDTO(Double productPrice, String productName, String manufactureName, Category category) {
         this.productPrice = productPrice;
         this.productName = productName;
         this.manufactureName = manufactureName;
-    }
-
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
+        this.category = category;
     }
 
     public Double getProductPrice() {
@@ -46,6 +40,14 @@ public class ProductDTO {
 
     public void setManufactureName(String manufactureName) {
         this.manufactureName = manufactureName;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
 

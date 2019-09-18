@@ -1,7 +1,6 @@
 package com.sklepmuzyczny.demo.model;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-@Getter
-@Setter
+
 public class Delivery {
 
     @Id
@@ -19,4 +17,21 @@ public class Delivery {
 
     @OneToOne(mappedBy = "delivery")
     private Customer customer;
+
+
+    public Long getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(Long deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

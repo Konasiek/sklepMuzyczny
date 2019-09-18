@@ -1,7 +1,5 @@
 package com.sklepmuzyczny.demo.model;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+
 @Entity
 public class Category implements Serializable {
 
@@ -24,4 +21,29 @@ public class Category implements Serializable {
 
     @OneToMany
     private List<Product> listOfProducts = new ArrayList<>();
+
+
+    public Long getCategoryId() {
+        return CategoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        CategoryId = categoryId;
+    }
+
+    public String getNameCategory() {
+        return nameCategory;
+    }
+
+    public void setNameCategory(String nameCategory) {
+        this.nameCategory = nameCategory;
+    }
+
+    public List<Product> getListOfProducts() {
+        return listOfProducts;
+    }
+
+    public void setListOfProducts(List<Product> listOfProducts) {
+        this.listOfProducts = listOfProducts;
+    }
 }

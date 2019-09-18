@@ -1,14 +1,11 @@
 package com.sklepmuzyczny.demo.model;
 
 
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+
 public class Product {
 
     @Id
@@ -24,5 +21,43 @@ public class Product {
     public Product() {
     }
 
+    public Long getProductId() {
+        return productId;
+    }
 
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getManufacturerName() {
+        return manufacturerName;
+    }
+
+    public void setManufacturerName(String manufacturerName) {
+        this.manufacturerName = manufacturerName;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

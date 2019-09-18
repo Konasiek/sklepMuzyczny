@@ -1,6 +1,9 @@
 package com.sklepmuzyczny.demo.model;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +23,7 @@ public class Category implements Serializable {
     private String nameCategory;
 
     @OneToMany
+    @Fetch(FetchMode.JOIN)
     private List<Category> listOfCategories = new ArrayList<>();
 
     public Category() {

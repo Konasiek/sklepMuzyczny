@@ -29,12 +29,6 @@ public class CustromerController {
         return customer;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public Customer addCustomer(@RequestBody Customer customer) {
-        customerService.addNewUser(customer);
-
-        return customer;
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteCustomer(@PathVariable("id") long id) {

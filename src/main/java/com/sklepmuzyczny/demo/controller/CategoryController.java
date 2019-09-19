@@ -30,12 +30,6 @@ public class CategoryController {
         return category;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public Category addCategory(@RequestBody Category category) {
-        categoryService.addNewCategory(category);
-
-        return category;
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteCategory(@PathVariable("id") long id) {

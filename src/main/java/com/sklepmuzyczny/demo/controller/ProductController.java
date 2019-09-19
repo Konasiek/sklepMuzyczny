@@ -30,12 +30,6 @@ public class ProductController {
         return product;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public Product addProduct(@RequestBody Product product) {
-        productService.addNewProduct(product);
-
-        return product;
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteProduct(@PathVariable("id") long id) {

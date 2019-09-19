@@ -20,6 +20,7 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Category> getAllCategories() {
         List<Category> list = categoryService.getAllCategories();
+
         return list;
     }
 

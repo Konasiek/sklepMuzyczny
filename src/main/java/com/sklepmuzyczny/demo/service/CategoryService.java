@@ -23,10 +23,11 @@ public class CategoryService {
 
     public void addNewCategory(Category category) {
         categoryRepository.save(category);
+
     }
 
     public List<Category> getAllCategories() {
-        List<Category> list = (List) categoryRepository.findAll();
+        List<Category> list = (List<Category>) categoryRepository.findAll();
         return list;
     }
     public Category getCategoryById(Long id) {

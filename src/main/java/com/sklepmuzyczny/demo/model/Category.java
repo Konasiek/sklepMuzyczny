@@ -22,17 +22,14 @@ public class Category implements Serializable {
     private Long CategoryId;
     private String nameCategory;
 
-    @OneToMany
-    @Fetch(FetchMode.JOIN)
-    private List<Category> listOfCategories = new ArrayList<>();
+//    @OneToMany
+//    @Fetch(FetchMode.JOIN)
+//    private List<Category> listOfCategories = new ArrayList<>();
 
     public Category() {
     }
 
-    public Category(String nameCategory, List<Category> listOfCategories) {
-        this.nameCategory = nameCategory;
-        this.listOfCategories = listOfCategories;
-    }
+
 
     public Long getCategoryId() {
         return CategoryId;
@@ -50,11 +47,5 @@ public class Category implements Serializable {
         this.nameCategory = nameCategory;
     }
 
-    public List<Category> getListOfCategories() {
-        return listOfCategories;
-    }
 
-    public void setListOfCategories(List<Category> listOfCategories) {
-        this.listOfCategories = listOfCategories;
-    }
 }

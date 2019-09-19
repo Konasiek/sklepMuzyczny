@@ -3,9 +3,7 @@ package com.sklepmuzyczny.demo.DTO;
 
 public class CategoryDTO {
 
-
     private String nameCategory;
-
 
     public CategoryDTO() {
     }
@@ -13,9 +11,7 @@ public class CategoryDTO {
     public CategoryDTO(String nameCategory) {
 
         this.nameCategory = nameCategory;
-
     }
-
 
     public String getNameCategory() {
         return nameCategory;
@@ -24,5 +20,4 @@ public class CategoryDTO {
     public void setNameCategory(String nameCategory) {
         this.nameCategory = nameCategory;
     }
-
 }

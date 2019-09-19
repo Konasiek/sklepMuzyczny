@@ -6,6 +6,7 @@ import com.sklepmuzyczny.demo.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/product")
@@ -54,5 +55,11 @@ public class ProductController {
         productService.addNewProduct(product);
         return product;
 
+    }
+    @RequestMapping(value = "/byCategory{id}", method = RequestMethod.GET)
+    public List<Product> getProductsByCategoryId(@PathVariable("id") Long id) {
+        List<Product> list = productService.getProducts().stream().filter(f -> f.getCategory().getCategoryId() == id).collect(Collectors.toList());
+
+        return list;
     }
 }

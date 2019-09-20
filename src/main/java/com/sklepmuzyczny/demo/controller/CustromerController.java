@@ -18,17 +18,15 @@ public class CustromerController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Customer> getAllCustomer() {
-        List<Customer> list = customerService.getUsers();
+    public List<Customer> getAllCustomer () {
+        List<Customer> list = customerService.getCustomers();
         return list;
     }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Customer getCustomerById(@PathVariable("id") Long id) {
-        Customer customer = customerService.getUserById(id);
+        Customer customer = customerService.getCustomerById(id);
         return customer;
     }
-
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteCustomer(@PathVariable("id") long id) {
@@ -36,15 +34,14 @@ public class CustromerController {
     }
 
     @PostMapping("/newCustomer")
-    public Customer addCustomerUser(@RequestBody CustomerDTO customerDTO) {
+    public Customer addCustomer(@RequestBody CustomerDTO customerDTO) {
 
         Customer customer = new Customer();
         customer.setPassword(customerDTO.getPassword());
         customer.setLogin(customerDTO.getLogin());
         customer.setCustomerId(customerDTO.getCustomerId());
 
-        customerService.addNewUser(customer);
+        customerService.addNewCustomer(customer);
         return customer;
-
     }
 }

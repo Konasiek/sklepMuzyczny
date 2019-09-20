@@ -45,7 +45,6 @@ public class CategoryController {
 
         categoryService.addNewCategory(category);
         return category;
-
     }
 
 

@@ -30,7 +30,6 @@ public class CategoryController {
         return category;
     }
 
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteCategory(@PathVariable("id") long id) {
         categoryService.deleteById(id);
@@ -41,7 +40,6 @@ public class CategoryController {
 
         Category category = new Category();
         category.setNameCategory(categoryDTO.getNameCategory());
-
 
         categoryService.addNewCategory(category);
         return category;

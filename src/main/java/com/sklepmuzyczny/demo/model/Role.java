@@ -1,11 +1,10 @@
 package com.sklepmuzyczny.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "role")
 public class Role {
 
 
@@ -14,6 +13,17 @@ public class Role {
     private Long id;
 
     private String role;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<Customer> customers;
+
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }
 
     public Long getId() {
         return id;

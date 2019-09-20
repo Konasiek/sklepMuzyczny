@@ -1,16 +1,10 @@
 package com.sklepmuzyczny.demo.model;
 
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -19,7 +13,7 @@ public class Category implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long CategoryId;
+    private Long categoryId;
     private String nameCategory;
 
 //    @OneToMany
@@ -32,11 +26,11 @@ public class Category implements Serializable {
 
 
     public Long getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
     public void setCategoryId(Long categoryId) {
-        CategoryId = categoryId;
+        this.categoryId = categoryId;
     }
 
     public String getNameCategory() {

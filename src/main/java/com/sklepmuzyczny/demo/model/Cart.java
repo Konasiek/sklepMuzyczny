@@ -1,35 +1,37 @@
 package com.sklepmuzyczny.demo.model;
 
-
-import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
 public class Cart {
 
-    @ManyToOne
-    private List<Product> products = new ArrayList<>();
-
-    @ManyToOne
-    private List<Delivery> orders = new ArrayList<>();
-
+    @Id
+    @GeneratedValue
+    private Long cartId;
     private Integer amount;
 
-    public List<Product> getProducts() {
-        return products;
+    @OneToMany
+    private List<Product> products = new ArrayList<>();
+
+    public Cart() {
     }
 
-    public void setProducts(List<Product> products) {
+    public Cart(Integer amount, List<Product> products) {
+        this.amount = amount;
         this.products = products;
     }
 
-    public List<Delivery> getOrders() {
-        return orders;
+    public Long getCartId() {
+        return cartId;
     }
 
-    public void setOrders(List<Delivery> orders) {
-        this.orders = orders;
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
     }
 
     public Integer getAmount() {
@@ -38,5 +40,13 @@ public class Cart {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

@@ -1,6 +1,5 @@
 package com.sklepmuzyczny.demo.controller;
 
-
 import com.sklepmuzyczny.demo.DTO.CartDTO;
 import com.sklepmuzyczny.demo.model.Cart;
 import com.sklepmuzyczny.demo.service.CartService;
@@ -42,7 +41,6 @@ public class CartController {
         Cart cart = new Cart();
         cart.setAmount(cartDTO.getAmount());
         cart.setProducts(cartDTO.getProducts());
-
 
         cartService.addNewCart(cart);
         return cart;

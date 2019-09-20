@@ -4,12 +4,10 @@ import com.sklepmuzyczny.demo.model.Category;
 
 public class ProductDTO {
 
-
     private Double productPrice;
     private String productName;
     private String manufactureName;
     private Category category;
-
 
     public ProductDTO(Double productPrice, String productName, String manufactureName, Category category) {
         this.productPrice = productPrice;

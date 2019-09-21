@@ -13,7 +13,7 @@ public class Cart {
     @Id
     @GeneratedValue
     private Long cartId;
-    private Integer amount;
+
 
     @OneToMany
     private List<Product> products = new ArrayList<>();
@@ -21,8 +21,7 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(Integer amount, List<Product> products) {
-        this.amount = amount;
+    public Cart(List<Product> products) {
         this.products = products;
     }
 
@@ -32,14 +31,6 @@ public class Cart {
 
     public void setCartId(Long cartId) {
         this.cartId = cartId;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     public List<Product> getProducts() {

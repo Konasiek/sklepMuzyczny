@@ -3,6 +3,7 @@ package com.sklepmuzyczny.demo.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -53,8 +54,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         auth.
                 jdbcAuthentication()
-                .usersByUsernameQuery("select login, password, active from user where login=?")
-                .authoritiesByUsernameQuery("select u.login, r.role from user u inner join user_role ur on(u.id=ur.user_id) inner join role r on(ur.role_id=r.id) where u.login=?")
+                .usersByUsernameQuery("select login, password, active from customer where login=?")
+                .authoritiesByUsernameQuery("select c.login, r.role from customer c inner join customer_role cr on(c.customer_id=cr.customer_id) inner join role r on(cr.role_id=r.id) where c.login=?")
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }

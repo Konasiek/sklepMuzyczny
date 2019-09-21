@@ -46,7 +46,7 @@ public class CustomerService {
 
     public void saveCustomer(Customer customer){
         customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
-        Role customerRole = roleRepository.findByRole("ADMIN");
+        Role customerRole = roleRepository.findByRole("ROLE_ADMIN");
         customer.setRoles(new HashSet<Role>(Arrays.asList(customerRole)));
         customer.setActive(1);
         customerRepository.save(customer);

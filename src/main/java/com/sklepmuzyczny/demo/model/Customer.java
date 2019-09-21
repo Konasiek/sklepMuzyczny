@@ -17,7 +17,7 @@ public class Customer {
     private Long customerId;
 
     @Size(max = 30)
-    private String name;
+    private String customerName;
 
     @Email
     private String email;
@@ -30,7 +30,7 @@ public class Customer {
     private int active;
 
     @JsonIgnore
-    @Length(min = 5, message = "*Twoje hasło musi mieć przynajmniej 5 znaków")
+    @Length(min = 5, message = "*Twoje hasło musi mieć przynajmniej 5 znaków, 666")
     @NotBlank(message = "*Please provide your password")
     private String password;
 
@@ -45,10 +45,14 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long customerId, String login, String password) {
-        this.customerId = customerId;
+    public Customer(@Size(max = 30) String customerName, @Email String email, @NotBlank String login, int active, @Length(min = 5, message = "*Twoje hasło musi mieć przynajmniej 5 znaków") @NotBlank(message = "*Please provide your password") String password, Set<Role> roles, Delivery delivery) {
+        this.customerName = customerName;
+        this.email = email;
         this.login = login;
+        this.active = active;
         this.password = password;
+        this.roles = roles;
+        this.delivery = delivery;
     }
 
     public Long getCustomerId() {
@@ -59,12 +63,12 @@ public class Customer {
         this.customerId = customerId;
     }
 
-    public String getName() {
-        return name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getEmail() {

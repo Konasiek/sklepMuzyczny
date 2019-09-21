@@ -3,6 +3,7 @@ package com.sklepmuzyczny.demo.controller;
 import com.sklepmuzyczny.demo.DTO.CustomerDTO;
 import com.sklepmuzyczny.demo.model.Customer;
 import com.sklepmuzyczny.demo.service.CustomerService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class CustomerController {
         customer.setPassword(customerDTO.getPassword());
         customer.setLogin(customerDTO.getLogin());
         customer.setCustomerId(customerDTO.getCustomerId());
+        customer.setRoles(customerDTO.getRoles());
 
         customerService.addNewCustomer(customer);
         return customer;

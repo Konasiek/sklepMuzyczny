@@ -1,7 +1,9 @@
 package com.sklepmuzyczny.demo.controller;
 
 import com.sklepmuzyczny.demo.DTO.CartDTO;
+import com.sklepmuzyczny.demo.DTO.ProductDTO;
 import com.sklepmuzyczny.demo.model.Cart;
+import com.sklepmuzyczny.demo.model.Product;
 import com.sklepmuzyczny.demo.service.CartService;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,14 +37,20 @@ public class CartController {
         cartService.deleteById(id);
     }
 
-    @PostMapping("/newCategory")
+    @PostMapping("/newCart")
     public Cart addCart(@RequestBody CartDTO cartDTO) {
 
         Cart cart = new Cart();
-        cart.setAmount(cartDTO.getAmount());
-        cart.setProducts(cartDTO.getProducts());
 
         cartService.addNewCart(cart);
         return cart;
     }
+
+//    @PostMapping("/addProductToCart")
+//    public Cart addProductToCart(@RequestBody Product product, Cart cart) {
+//
+//
+//        cart.getProducts();
+//
+//    }
 }

@@ -1,11 +1,10 @@
 package com.sklepmuzyczny.demo.service;
 
-import com.sklepmuzyczny.demo.model.Customer;
+import com.sklepmuzyczny.demo.model.User;
 import com.sklepmuzyczny.demo.model.Role;
 import com.sklepmuzyczny.demo.repository.CustomerRepository;
 import com.sklepmuzyczny.demo.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -18,34 +17,33 @@ public class CustomerService {
 
     private CustomerRepository customerRepository;
     private RoleRepository roleRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository,
-                           RoleRepository roleRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder) {
+                           RoleRepository roleRepository
+                           ) {
 
         this.customerRepository = customerRepository;
         this.roleRepository = roleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
     }
 
-    public void addNewCustomer(Customer customer) {
+    public void addNewCustomer(User customer) {
         customerRepository.save(customer);
     }
 
-    public List<Customer> getCustomers() {
-        List<Customer> list = (List) customerRepository.findAll();
+    public List<User> getCustomers() {
+        List<User> list = (List) customerRepository.findAll();
         return list;
     }
 
-    public Customer getCustomerById(Long id) {
-        Customer customer = (Customer) customerRepository.findById(id).get();
+    public User getCustomerById(Long id) {
+        User customer = (User) customerRepository.findById(id).get();
         return customer;
     }
 
-    public void saveCustomer(Customer customer){
-        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
+    public void saveCustomer(User customer){
+        customer.setPassword(customer.getPassword());
         Role customerRole = roleRepository.findByRole("ADMIN");
         customer.setRoles(new HashSet<Role>(Arrays.asList(customerRole)));
         customer.setActive(1);

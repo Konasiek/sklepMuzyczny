@@ -30,12 +30,10 @@ public class ProductController {
         return product;
     }
 
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteProduct(@PathVariable("id") long id) {
         productService.deleteById(id);
     }
-
 
     @PostMapping("/newProduct")
     public Product addNewProduct(@RequestBody ProductDTO productDTO) {
@@ -52,8 +50,10 @@ public class ProductController {
     }
     @RequestMapping(value = "/byCategory{id}", method = RequestMethod.GET)
     public List<Product> getProductsByCategoryId(@PathVariable("id") Long id) {
-        List<Product> list = productService.getProducts().stream().filter(f -> f.getCategory().getCategoryId() == id).collect(Collectors.toList());
-
+        List<Product> list = productService.getProducts()
+                .stream()
+                .filter(f -> f.getCategory().getCategoryId() == id)
+                .collect(Collectors.toList());
         return list;
     }
 }

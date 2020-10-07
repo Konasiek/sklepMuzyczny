@@ -7,24 +7,24 @@ import java.util.List;
 
 public class CartDTO {
 
-    private Integer amount;
+    private Double totalPrice;
 
     private List<Product> products = new ArrayList<>();
 
     public CartDTO() {
     }
 
-    public CartDTO(Integer amount, List<Product> products) {
-        this.amount = amount;
+    public CartDTO(Double totalPrice, List<Product> products) {
+        this.totalPrice = totalPrice;
         this.products = products;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public List<Product> getProducts() {

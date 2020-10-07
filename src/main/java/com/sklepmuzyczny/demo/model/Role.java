@@ -9,20 +9,20 @@ public class Role {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String role;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<Customer> customers;
+    private Set<User> users;
 
-    public Set<Customer> getCustomers() {
-        return customers;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setCustomers(Set<Customer> customers) {
-        this.customers = customers;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Long getId() {

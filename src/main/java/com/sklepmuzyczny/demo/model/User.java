@@ -10,18 +10,17 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-public class Customer {
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long customerId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
     @Size(max = 30)
     private String name;
 
     @Email
     private String email;
-
 
     @NotBlank
     private String login;
@@ -30,33 +29,33 @@ public class Customer {
     private int active;
 
     @JsonIgnore
-    @Length(min = 5, message = "*Twoje hasło musi mieć przynajmniej 5 znaków")
+    @Length(min = 5, message = "*Your's password have to has at least 5 symbols lenght")
     @NotBlank(message = "*Please provide your password")
     private String password;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "customer_role", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     @OneToOne
     private Delivery delivery;
 
-    public Customer() {
+    public User() {
     }
 
-    public Customer(Long customerId, String login, String password) {
-        this.customerId = customerId;
+    public User(Long userId, String login, String password) {
+        this.userId = userId;
         this.login = login;
         this.password = password;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -83,6 +82,14 @@ public class Customer {
         this.login = login;
     }
 
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -105,13 +112,5 @@ public class Customer {
 
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
-    }
-
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
     }
 }

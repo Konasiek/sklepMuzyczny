@@ -1,9 +1,6 @@
 package com.sklepmuzyczny.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,18 +8,18 @@ import java.util.List;
 public class Cart {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
-    private Integer amount;
+    private Double totalPrice;
 
     @OneToMany
-    private List<Product> products = new ArrayList<>();
+    private List<Product> products;
 
     public Cart() {
     }
 
-    public Cart(Integer amount, List<Product> products) {
-        this.amount = amount;
+    public Cart(Double totalPrice, List<Product> products) {
+        this.totalPrice = totalPrice;
         this.products = products;
     }
 
@@ -34,12 +31,12 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public List<Product> getProducts() {

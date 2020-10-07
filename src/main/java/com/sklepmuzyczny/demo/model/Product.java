@@ -1,15 +1,12 @@
 package com.sklepmuzyczny.demo.model;
 
-
-
 import javax.persistence.*;
 
 @Entity
-
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
     private Double productPrice;
     private String productName;

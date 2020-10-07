@@ -27,6 +27,7 @@ public class CartService {
         List<Cart> list = (List) cartRepository.findAll();
         return list;
     }
+
     public Cart getCartsById(Long id) {
         Cart cart = (Cart) cartRepository.findById(id).get();
         return cart;

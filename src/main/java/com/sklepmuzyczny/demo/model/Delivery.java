@@ -1,22 +1,19 @@
 package com.sklepmuzyczny.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Delivery {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long deliveryId;
 
     private String city;
     private String street;
 
     @OneToOne(mappedBy = "delivery")
-    private Customer customer;
+    private User user;
 
     @OneToOne
     private Cart cart;
@@ -48,12 +45,12 @@ public class Delivery {
         this.street = street;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Cart getCart() {

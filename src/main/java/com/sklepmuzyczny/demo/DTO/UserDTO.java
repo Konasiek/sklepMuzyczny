@@ -1,25 +1,25 @@
 package com.sklepmuzyczny.demo.DTO;
 
 
-public class CustomerDTO {
+public class UserDTO {
 
-    private Long customerId;
+    private Long userId;
     private String login;
     private String password;
 
 
-    public CustomerDTO(Long customerId, String login, String password) {
-        this.customerId = customerId;
+    public UserDTO(Long userId, String login, String password) {
+        this.userId = userId;
         this.login = login;
         this.password = password;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getLogin() {

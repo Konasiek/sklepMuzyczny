@@ -2,7 +2,7 @@ package com.sklepmuzyczny.demo.service;
 
 import com.sklepmuzyczny.demo.model.User;
 import com.sklepmuzyczny.demo.model.Role;
-import com.sklepmuzyczny.demo.repository.CustomerRepository;
+import com.sklepmuzyczny.demo.repository.UserRepository;
 import com.sklepmuzyczny.demo.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,46 +12,40 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class CustomerService {
+public class UserService {
 
-
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
     private RoleRepository roleRepository;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository,
-                           RoleRepository roleRepository
-                           ) {
-
-        this.customerRepository = customerRepository;
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-
     }
 
-    public void addNewCustomer(User customer) {
-        customerRepository.save(customer);
+    public void addNewUser(User user) {
+        userRepository.save(user);
     }
 
-    public List<User> getCustomers() {
-        List<User> list = (List) customerRepository.findAll();
+    public List<User> getUsers() {
+        List<User> list = (List) userRepository.findAll();
         return list;
     }
 
-    public User getCustomerById(Long id) {
-        User customer = (User) customerRepository.findById(id).get();
-        return customer;
+    public User getUserById(Long id) {
+        User user = (User) userRepository.findById(id).get();
+        return user;
     }
 
-    public void saveCustomer(User customer){
-        customer.setPassword(customer.getPassword());
-        Role customerRole = roleRepository.findByRole("ADMIN");
-        customer.setRoles(new HashSet<Role>(Arrays.asList(customerRole)));
-        customer.setActive(1);
-        customerRepository.save(customer);
-
+    public void saveUser(User user) {
+        user.setPassword(user.getPassword());
+        Role userRole = roleRepository.findByRole("ADMIN");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        user.setActive(1);
+        userRepository.save(user);
     }
 
     public void deleteById(Long id) {
-        customerRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 }

@@ -9,7 +9,6 @@ public class CategoryDTO {
     }
 
     public CategoryDTO(String nameCategory) {
-
         this.nameCategory = nameCategory;
     }
 

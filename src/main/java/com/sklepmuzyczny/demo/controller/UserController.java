@@ -1,47 +1,47 @@
 package com.sklepmuzyczny.demo.controller;
 
-import com.sklepmuzyczny.demo.DTO.CustomerDTO;
-import com.sklepmuzyczny.demo.model.Customer;
-import com.sklepmuzyczny.demo.service.CustomerService;
+import com.sklepmuzyczny.demo.DTO.UserDTO;
+import com.sklepmuzyczny.demo.model.User;
+import com.sklepmuzyczny.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/customer")
-public class CustomerController {
+@RequestMapping("/user")
+public class UserController {
 
-    CustomerService customerService;
+    UserService userService;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Customer> getAllCustomer () {
-        List<Customer> list = customerService.getCustomers();
+    public List<User> getAllUser () {
+        List<User> list = userService.getUsers();
         return list;
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Customer getCustomerById(@PathVariable("id") Long id) {
-        Customer customer = customerService.getCustomerById(id);
-        return customer;
+    public User getUserById(@PathVariable("id") Long id) {
+        User user = userService.getUserById(id);
+        return user;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteCustomer(@PathVariable("id") long id) {
-        customerService.deleteById(id);
+    public void deleteUser(@PathVariable("id") long id) {
+        userService.deleteById(id);
     }
 
-    @PostMapping("/newCustomer")
-    public Customer addCustomer(@RequestBody CustomerDTO customerDTO) {
+    @PostMapping("/addUser")
+    public User addUser(@RequestBody UserDTO userDTO) {
 
-        Customer customer = new Customer();
-        customer.setPassword(customerDTO.getPassword());
-        customer.setLogin(customerDTO.getLogin());
-        customer.setCustomerId(customerDTO.getCustomerId());
+        User user = new User();
+        user.setPassword(userDTO.getPassword());
+        user.setLogin(userDTO.getLogin());
+        user.setUserId(userDTO.getUserId());
 
-        customerService.addNewCustomer(customer);
-        return customer;
+        userService.addNewUser(user);
+        return user;
     }
 }

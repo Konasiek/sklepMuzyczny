@@ -17,19 +17,15 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-
-    public CategoryService() {
-    }
-
     public void addNewCategory(Category category) {
         categoryRepository.save(category);
-
     }
 
     public List<Category> getAllCategories() {
         List<Category> list = (List<Category>) categoryRepository.findAll();
         return list;
     }
+
     public Category getCategoryById(Long id) {
         Category category = (Category) categoryRepository.findById(id).get();
         return category;
@@ -38,5 +34,4 @@ public class CategoryService {
     public void deleteById(Long id) {
         categoryRepository.deleteById(id);
     }
-
 }

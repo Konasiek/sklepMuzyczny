@@ -1,7 +1,7 @@
 package com.sklepmuzyczny.demo.DTO;
 
 import com.sklepmuzyczny.demo.model.Cart;
-import com.sklepmuzyczny.demo.model.Customer;
+import com.sklepmuzyczny.demo.model.User;
 
 
 public class DeliveryDTO {
@@ -9,16 +9,16 @@ public class DeliveryDTO {
 
     private String city;
     private String street;
-    private Customer customer;
+    private User user;
     private Cart cart;
 
     public DeliveryDTO() {
     }
 
-    public DeliveryDTO(String city, String street, Customer customer, Cart cart) {
+    public DeliveryDTO(String city, String street, User user, Cart cart) {
         this.city = city;
         this.street = street;
-        this.customer = customer;
+        this.user = user;
         this.cart = cart;
     }
 
@@ -38,12 +38,12 @@ public class DeliveryDTO {
         this.street = street;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Cart getCart() {

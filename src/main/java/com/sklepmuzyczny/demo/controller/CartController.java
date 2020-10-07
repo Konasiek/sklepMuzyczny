@@ -35,11 +35,12 @@ public class CartController {
         cartService.deleteById(id);
     }
 
-    @PostMapping("/newCategory")
+    @PostMapping("/newCart")
     public Cart addCart(@RequestBody CartDTO cartDTO) {
 
         Cart cart = new Cart();
-        cart.setAmount(cartDTO.getAmount());
+        // totalPrice should be automatic
+        cart.setTotalPrice(cartDTO.getTotalPrice());
         cart.setProducts(cartDTO.getProducts());
 
         cartService.addNewCart(cart);

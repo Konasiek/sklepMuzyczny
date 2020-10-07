@@ -42,7 +42,7 @@ public class DeliveryController {
         delivery.setCart(deliveryDTO.getCart());
         delivery.setCity(deliveryDTO.getCity());
         delivery.setStreet(deliveryDTO.getStreet());
-        delivery.setCustomer(deliveryDTO.getCustomer());
+        delivery.setUser(deliveryDTO.getUser());
 
         deliveryService.addNewDelivery(delivery);
         return delivery;

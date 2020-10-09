@@ -5,6 +5,7 @@ import com.sklepmuzyczny.demo.model.Role;
 import com.sklepmuzyczny.demo.repository.UserRepository;
 import com.sklepmuzyczny.demo.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,14 +17,17 @@ public class UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void addNewUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -38,7 +42,8 @@ public class UserService {
     }
 
     public void saveUser(User user) {
-        user.setPassword(user.getPassword());
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role userRole = roleRepository.findByRole("ADMIN");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         user.setActive(1);

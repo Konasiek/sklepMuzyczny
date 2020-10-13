@@ -4,13 +4,13 @@ package com.sklepmuzyczny.demo.DTO;
 public class UserDTO {
 
     private Long userId;
-    private String login;
+    private String username;
     private String password;
 
 
-    public UserDTO(Long userId, String login, String password) {
+    public UserDTO(Long userId, String username, String password) {
         this.userId = userId;
-        this.login = login;
+        this.username = username;
         this.password = password;
     }
 
@@ -22,12 +22,12 @@ public class UserDTO {
         this.userId = userId;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

@@ -3,6 +3,7 @@ package com.sklepmuzyczny.demo.controller;
 import com.sklepmuzyczny.demo.DTO.UserDTO;
 import com.sklepmuzyczny.demo.model.User;
 import com.sklepmuzyczny.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class UserController {
 
     UserService userService;
+
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -38,7 +40,7 @@ public class UserController {
 
         User user = new User();
         user.setPassword(userDTO.getPassword());
-        user.setLogin(userDTO.getLogin());
+        user.setUsername(userDTO.getUsername());
         user.setUserId(userDTO.getUserId());
 
         userService.addNewUser(user);

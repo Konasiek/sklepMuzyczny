@@ -12,6 +12,7 @@ public enum ApplicationUserPermission {
     READ_CART("read:cart"),
 
     // FOR ADMIN:
+    READ_USER("read:user"),
     BAN_USER("ban:user"),
     ADD_PRODUCT("add:product"),
     DELETE_PRODUCT("delete:product"),

@@ -1,5 +1,6 @@
 package com.sklepmuzyczny.demo.model;
 
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ public class Role {
     private Long id;
 
     private String role;
+
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
@@ -40,4 +42,6 @@ public class Role {
     public void setRole(String role) {
         this.role = role;
     }
+
+
 }

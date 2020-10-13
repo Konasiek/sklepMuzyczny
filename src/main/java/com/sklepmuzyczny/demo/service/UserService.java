@@ -20,17 +20,15 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
+//    private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+//        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-
 
     public void addNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -47,14 +45,14 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public void saveUser(User user) {
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByRole("ADMIN");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-
-        userRepository.save(user);
-    }
+//    public void saveUser(User user) {
+//
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        Role userRole = roleRepository.findByRole("ADMIN");
+//        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+//
+//        userRepository.save(user);
+//    }
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);

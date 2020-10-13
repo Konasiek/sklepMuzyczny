@@ -12,8 +12,14 @@ public class TemplateController {
     public String getLoginView() {
         return "login";
     }
+
     @RequestMapping(value = "index",method = RequestMethod.GET)
     public String getMainPage() {
         return "index";
+    }
+
+    @RequestMapping(value = "registration",method = RequestMethod.GET)
+    public String getRegistrationPage() {
+        return "registration";
     }
 }

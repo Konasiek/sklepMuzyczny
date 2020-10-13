@@ -20,7 +20,6 @@ public class DeliveryController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Delivery> getAllDeliveries() {
         List<Delivery> list = deliveryService.getDeliveries();
-
         return list;
     }
 

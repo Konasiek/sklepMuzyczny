@@ -2,7 +2,6 @@ package com.sklepmuzyczny.demo.security;
 
 import com.google.common.collect.Sets;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,12 +22,12 @@ public enum ApplicationUserRole {
         return permissions;
     }
 
-    public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
-
-        Set<SimpleGrantedAuthority> permissions = getPermissions().stream()
-                .map(c -> new SimpleGrantedAuthority(c.getPermission()))
-                .collect(Collectors.toSet());                                    // changes ApplicationUserPermission to SimpleGrantedAuthority
-        permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name())); // changes ex. "ADMIN" to "ROLE_ADMIN"
-        return permissions;
-    }
+//    public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
+//
+//        Set<SimpleGrantedAuthority> permissions = getPermissions().stream()
+//                .map(c -> new SimpleGrantedAuthority(c.getPermission()))
+//                .collect(Collectors.toSet());                                    // changes ApplicationUserPermission to SimpleGrantedAuthority
+//        permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name())); // changes ex. "ADMIN" to "ROLE_ADMIN"
+//        return permissions;
+//    }
 }

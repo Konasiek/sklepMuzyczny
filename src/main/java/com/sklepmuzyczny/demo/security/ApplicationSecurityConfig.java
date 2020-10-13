@@ -1,17 +1,11 @@
 package com.sklepmuzyczny.demo.security;
 
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
@@ -35,7 +29,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/css/*","/js/*").permitAll()
+                .antMatchers("/", "/registration", "/index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/cart**").hasRole(USER.name())
                 .antMatchers(HttpMethod.DELETE, "/category/**").hasAuthority(DELETE_CATEGORY.getPermission())
                 .antMatchers(HttpMethod.POST, "/category/**").hasAuthority(ADD_CATEGORY.getPermission())
@@ -49,44 +43,22 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/", true)
-                    .passwordParameter("password")
-                    .usernameParameter("username")
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/", true)
+                .passwordParameter("password")
+                .usernameParameter("username")
                 .and()
                 .rememberMe()
-                    .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(10))
-                    .rememberMeParameter("remmember-me")
+                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(10))
+                .rememberMeParameter("remmember-me")
                 .and()
                 .logout()
-                    .logoutUrl("/logout")
-                    // only enable with crsf disabled
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-                    .clearAuthentication(true)
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID", "remmember-me")
-                    .logoutSuccessUrl("/login");
+                .logoutUrl("/logout")
+                // only enable with crsf disabled
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID", "remmember-me")
+                .logoutSuccessUrl("/login");
     }
-
-//    @Override
-//    @Bean
-//    protected UserDetailsService userDetailsService() {
-//
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder.encode("admin"))
-//                .roles("ADMIN")   // ROLE_ADMIN
-//                .build();
-//
-//        UserDetails john = User.builder()
-//                .username("john")
-//                .password(passwordEncoder.encode("john"))
-//                .roles("USER")   // ROLE_USER
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(
-//                admin,
-//                john
-//        );
-//    }
 }

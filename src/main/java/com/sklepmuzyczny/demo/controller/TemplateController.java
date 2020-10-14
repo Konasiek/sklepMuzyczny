@@ -8,18 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class TemplateController {
 
-    @RequestMapping(value = "login",method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
     public String getLoginView() {
         return "login";
     }
 
-    @RequestMapping(value = "index",method = RequestMethod.GET)
+    @RequestMapping(value = "index", method = RequestMethod.GET)
     public String getMainPage() {
         return "index";
     }
 
-    @RequestMapping(value = "registration",method = RequestMethod.GET)
-    public String getRegistrationPage() {
-        return "registration";
     }
-}

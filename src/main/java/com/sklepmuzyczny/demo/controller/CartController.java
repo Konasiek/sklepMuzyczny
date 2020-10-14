@@ -20,7 +20,6 @@ public class CartController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Cart> getAllCarts() {
         List<Cart> list = cartService.getCarts();
-
         return list;
     }
 

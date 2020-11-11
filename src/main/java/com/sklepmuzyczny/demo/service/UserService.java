@@ -20,18 +20,36 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
-//    private RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository,
+                       RoleRepository roleRepository,
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-//        this.roleRepository = roleRepository;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     public void addNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+
+        Optional<Role> userRole = Optional.ofNullable(roleRepository.findByRole("USER"));
+
+        if (!userRole.isPresent()) {
+            Role roleUser = new Role();
+            roleUser.setRole("USER");
+            user.setRoles(new HashSet<Role>(Arrays.asList(roleUser)));
+
+        } else {
+            user.setRoles(new HashSet<Role>(Arrays.asList(userRole.get())));
+        }
+
         userRepository.save(user);
     }
 
@@ -61,10 +79,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> optionalUsers = userRepository.findByUsername(username);
-
-        optionalUsers
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-        return optionalUsers
-                .get();
+        optionalUsers.orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found"));
+        return optionalUsers.get();
     }
 }

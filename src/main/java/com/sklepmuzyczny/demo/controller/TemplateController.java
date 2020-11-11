@@ -13,9 +13,8 @@ public class TemplateController {
         return "login";
     }
 
-    @RequestMapping(value = "index", method = RequestMethod.GET)
+    @RequestMapping(value = {"index", ""}, method = RequestMethod.GET)
     public String getMainPage() {
         return "index";
     }
-
-    }
+}

@@ -39,10 +39,8 @@ public class UserRegistrationController {
             user.setUsername(userDTO.getUsername());
             user.setPassword(userDTO.getPassword());
             userService.addNewUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registration");
-            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.setViewName("login");
         }
         return modelAndView;
     }

@@ -21,7 +21,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/registration", "/index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/", "/product", "/registration", "/index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/cart").hasRole(USER.name())
                 .antMatchers(HttpMethod.DELETE, "/category/**").hasAuthority(DELETE_CATEGORY.getPermission())
                 .antMatchers(HttpMethod.POST, "/category/**").hasAuthority(ADD_CATEGORY.getPermission())

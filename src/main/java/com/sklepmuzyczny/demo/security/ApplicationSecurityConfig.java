@@ -1,10 +1,12 @@
 package com.sklepmuzyczny.demo.security;
 
+import com.sklepmuzyczny.demo.jwt.JwtUsernameAndPasswordAutheticationFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
@@ -20,8 +22,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtUsernameAndPasswordAutheticationFilter(authenticationManager()))
                 .authorizeRequests()
-                .antMatchers("/", "/product", "/registration", "/index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/", "/product", "/logout", "/registration", "/index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/cart").hasRole(USER.name())
                 .antMatchers(HttpMethod.DELETE, "/category/**").hasAuthority(DELETE_CATEGORY.getPermission())
                 .antMatchers(HttpMethod.POST, "/category/**").hasAuthority(ADD_CATEGORY.getPermission())
@@ -32,25 +37,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/product/**").hasAuthority(ADD_PRODUCT.getPermission())
                 .antMatchers(HttpMethod.DELETE, "/user/**").hasAuthority(BAN_USER.getPermission())
                 .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/", true)
-                .passwordParameter("password")
-                .usernameParameter("username")
-                .and()
-                .rememberMe()
-                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(10))
-                .rememberMeParameter("remmember-me")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                // only enable with crsf disabled
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID", "remmember-me")
-                .logoutSuccessUrl("/login");
+                .authenticated();
     }
 }

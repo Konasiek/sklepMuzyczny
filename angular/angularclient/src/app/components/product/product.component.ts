@@ -9,7 +9,8 @@ import {ProductService} from "../../services/product.service";
 })
 export class ProductComponent implements OnInit {
 
-  products: Product[] = [];
+  // @ts-ignore
+  products: Product[];
 
   constructor(private productService: ProductService) {
   }

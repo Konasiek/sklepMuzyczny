@@ -1,15 +1,17 @@
 package com.sklepmuzyczny.demo.security;
 
-import com.sklepmuzyczny.demo.jwt.JwtUsernameAndPasswordAutheticationFilter;
+import com.sklepmuzyczny.demo.jwt.JwtConfig;
+import com.sklepmuzyczny.demo.jwt.JwtTokenVerifier;
+import com.sklepmuzyczny.demo.jwt.JwtUsernameAndPasswordAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.concurrent.TimeUnit;
+import javax.crypto.SecretKey;
 
 import static com.sklepmuzyczny.demo.security.ApplicationUserPermission.*;
 import static com.sklepmuzyczny.demo.security.ApplicationUserRole.*;
@@ -18,15 +20,27 @@ import static com.sklepmuzyczny.demo.security.ApplicationUserRole.*;
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final SecretKey secretKey;
+    private final JwtConfig jwtConfig;
+
+    @Autowired
+    public ApplicationSecurityConfig (SecretKey secretKey, JwtConfig jwtConfig) {
+        this.secretKey = secretKey;
+        this.jwtConfig = jwtConfig;
+    }
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAutheticationFilter(authenticationManager()))
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+                .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/", "/product", "/logout", "/registration", "/index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/", "/login", "/product", "/logout", "/registration", "/index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/cart").hasRole(USER.name())
                 .antMatchers(HttpMethod.DELETE, "/category/**").hasAuthority(DELETE_CATEGORY.getPermission())
                 .antMatchers(HttpMethod.POST, "/category/**").hasAuthority(ADD_CATEGORY.getPermission())

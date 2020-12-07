@@ -5,6 +5,7 @@ import com.sklepmuzyczny.demo.model.Role;
 import com.sklepmuzyczny.demo.repository.UserRepository;
 import com.sklepmuzyczny.demo.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@DependsOn("passwordEncoder")
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
@@ -30,6 +32,10 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public Optional<User> findOne(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public void addNewUser(User user) {
@@ -62,15 +68,6 @@ public class UserService implements UserDetailsService {
         User user = (User) userRepository.findById(id).get();
         return user;
     }
-
-//    public void saveUser(User user) {
-//
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        Role userRole = roleRepository.findByRole("ADMIN");
-//        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-//
-//        userRepository.save(user);
-//    }
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);

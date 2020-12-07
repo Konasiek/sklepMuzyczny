@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class TemplateController {
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String getLoginView() {
-        return "login";
-    }
+//    @RequestMapping(value = "login", method = RequestMethod.GET)
+//    public String getLoginView() {
+//        return "login";
+//    }
 
     @RequestMapping(value = {"index", ""}, method = RequestMethod.GET)
     public String getMainPage() {

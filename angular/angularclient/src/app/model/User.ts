@@ -6,7 +6,7 @@ export class User {
 
     password: string;
 
-    name: string;
+    username: string;
 
     phone: string;
 
@@ -18,6 +18,6 @@ export class User {
 
     constructor(){
         this.active = true;
-        this.role = Role.Customer;
+        this.role = Role.USER;
     }
 }

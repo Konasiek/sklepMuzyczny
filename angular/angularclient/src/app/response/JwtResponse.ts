@@ -5,7 +5,5 @@ export class JwtResponse {
     name: string;
     role: string;
 
-
-
 }
 

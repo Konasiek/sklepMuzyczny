@@ -16,12 +16,15 @@ export class UserService {
     public currentUser: Observable<JwtResponse>;
     public nameTerms = new Subject<string>();
     public name$ = this.nameTerms.asObservable();
+
     constructor(private http: HttpClient,
                 private cookieService: CookieService) {
         const memo = localStorage.getItem('currentUser');
         this.currentUserSubject = new BehaviorSubject<JwtResponse>(JSON.parse(memo));
         this.currentUser = this.currentUserSubject.asObservable();
         cookieService.set('currentUser', memo);
+
+        console.log('ustawiono memo ' + memo);
     }
 
     get currentUserValue() {
@@ -29,11 +32,19 @@ export class UserService {
     }
 
 
-    login(loginForm): Observable<JwtResponse | null> {
-        const url = '${apiUrl}/login';
+    login(loginForm): Observable<JwtResponse> {
+        const url = `${apiUrl}/login`;
+        console.log('url:' + url);
+        console.log("loginForm: "+loginForm.toLocaleString());
+
         return this.http.post<JwtResponse>(url, loginForm).pipe(
             tap(user => {
+                console.log('user: ' + user);
+                console.log('user.token: ' + user.token);
+                let userPlusToken = ('user && user.token: ' + user && user.token);
+                console.log('userPlusToken: ' + userPlusToken);
                 if (user && user.token) {
+                    console.log("am in user && user token if");
                     this.cookieService.set('currentUser', JSON.stringify(user));
                     if (loginForm.remembered) {
                         localStorage.setItem('currentUser', JSON.stringify(user));
@@ -49,6 +60,7 @@ export class UserService {
     }
 
     logout() {
+        console.log("loged out");
         this.currentUserSubject.next(null);
         localStorage.removeItem('currentUser');
         this.cookieService.delete('currentUser');
@@ -61,10 +73,11 @@ export class UserService {
 
     update(user: User): Observable<User> {
         const url = `${apiUrl}/profile`;
-        return this.http.put<User>(url, user);    }
+        return this.http.put<User>(url, user);
+    }
 
-    get(email: string): Observable<User> {
-        const url = `${apiUrl}/profile/${email}`;
+    get(login: string): Observable<User> {
+        const url = `${apiUrl}/profile/${login}`;
         return this.http.get<User>(url);
     }
 

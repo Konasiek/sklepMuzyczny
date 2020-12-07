@@ -1,11 +1,17 @@
-package com.sklepmuzyczny.demo.jwt;
+package com.sklepmuzyczny.demo.http.request;
 
-public class UsernameAndPasswordAuthenticationRequest {
+import javax.validation.constraints.NotBlank;
 
+
+public class LoginForm {
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
 
-    public UsernameAndPasswordAuthenticationRequest() {
+    public LoginForm(@NotBlank String username, @NotBlank String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {
@@ -24,3 +30,5 @@ public class UsernameAndPasswordAuthenticationRequest {
         this.password = password;
     }
 }
+
+

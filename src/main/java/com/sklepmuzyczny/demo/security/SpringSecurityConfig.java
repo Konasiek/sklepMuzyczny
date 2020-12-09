@@ -2,6 +2,8 @@ package com.sklepmuzyczny.demo.security;
 
 import com.sklepmuzyczny.demo.jwt.JwtEntryPoint;
 import com.sklepmuzyczny.demo.jwt.JwtFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,29 +34,33 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringSecurityConfig.class);
 
     //POBIERANIE WSTEPNYCH DANYCH??
     @Autowired
     @Qualifier("dataSource")
     DataSource dataSource;
 
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
+    @Value("${spring.queries.user-query}")
+    private String userQuery;
 
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
+    @Value("${spring.queries.role-query}")
+    private String roleQuery;
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        LOGGER.debug(userQuery);
+        LOGGER.debug(roleQuery);
+
         auth
                 .jdbcAuthentication()
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
+                .usersByUsernameQuery(userQuery)
+                .authoritiesByUsernameQuery(roleQuery)
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder);
 
-        System.out.println("usersQuery: " + usersQuery);
-        System.out.println("rolesQuery: " + rolesQuery);
+
     }
 
     @Bean

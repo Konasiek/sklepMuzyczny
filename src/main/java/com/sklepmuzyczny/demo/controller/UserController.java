@@ -6,6 +6,8 @@ import com.sklepmuzyczny.demo.http.response.JwtResponse;
 import com.sklepmuzyczny.demo.jwt.JwtProvider;
 import com.sklepmuzyczny.demo.model.User;
 import com.sklepmuzyczny.demo.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,8 @@ public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<JwtResponse> login(@RequestBody LoginForm loginForm) {
         // throws Exception if authentication failed
@@ -40,9 +44,13 @@ public class UserController {
         try {
             System.out.println("am in try");
             System.out.println("loginForm username and pass: "+loginForm.getUsername()+" "+loginForm.getPassword());
+            LOGGER.error("test loggera");
 
-            Authentication authentication = authenticationManager.authenticate(
+
+            Authentication authentication;
+            authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
+
 
             System.out.println("passed authentication");
             SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -1,50 +1,42 @@
 package com.sklepmuzyczny.demo.controller;
 
-import com.sklepmuzyczny.demo.DTO.CategoryDTO;
-import com.sklepmuzyczny.demo.model.Category;
+import com.sklepmuzyczny.demo.http.response.CategoryPage;
+import com.sklepmuzyczny.demo.model.ProductCategory;
+import com.sklepmuzyczny.demo.model.ProductInfo;
 import com.sklepmuzyczny.demo.service.CategoryService;
+import com.sklepmuzyczny.demo.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/category")
+@CrossOrigin
 public class CategoryController {
-
+    @Autowired
     CategoryService categoryService;
+    @Autowired
+    ProductService productService;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+
+    /**
+     * Show products in category
+     *
+     * @param categoryType
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/category/{type}")
+    public CategoryPage showOne(@PathVariable("type") Integer categoryType,
+                                @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                @RequestParam(value = "size", defaultValue = "3") Integer size) {
+
+        ProductCategory cat = categoryService.findByCategoryType(categoryType);
+        PageRequest request = PageRequest.of(page - 1, size);
+        Page<ProductInfo> productInCategory = productService.findAllInCategory(categoryType, request);
+        var tmp = new CategoryPage("", productInCategory);
+        tmp.setCategory(cat.getCategoryName());
+        return tmp;
     }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Category> getAllCategories() {
-        List<Category> list = categoryService.getAllCategories();
-
-        return list;
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Category getCategoryById(@PathVariable("id") Long id) {
-        Category category = categoryService.getCategoryById(id);
-        return category;
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteCategory(@PathVariable("id") long id) {
-        categoryService.deleteById(id);
-    }
-
-    @PostMapping("/newCategory")
-    public Category addCategory(@RequestBody CategoryDTO categoryDTO) {
-
-        Category category = new Category();
-        category.setNameCategory(categoryDTO.getNameCategory());
-
-        categoryService.addNewCategory(category);
-        return category;
-    }
-
-
 }

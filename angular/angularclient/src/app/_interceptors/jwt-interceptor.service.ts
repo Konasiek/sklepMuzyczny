@@ -9,8 +9,7 @@ import {Observable} from "rxjs";
 export class JwtInterceptor implements HttpInterceptor {
 
 
-    constructor(private userService: UserService,
-    ) {
+    constructor(private userService: UserService) {
 
     }
 
@@ -24,6 +23,11 @@ export class JwtInterceptor implements HttpInterceptor {
                     'Content-Type': 'application/json'
                 }
             });
+
+            console.log('current user account: ' + currentUser.account
+                + '\ncurrent user name: ' + currentUser.name
+                + '\ncurrent user role: ' + currentUser.role
+                + '\ncurrent user token: ' + currentUser.token);
         }
         return next.handle(request);
     }

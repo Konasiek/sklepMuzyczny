@@ -1,11 +1,7 @@
 package com.sklepmuzyczny.demo.repository;
 
 import com.sklepmuzyczny.demo.model.Cart;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface CartRepository extends CrudRepository <Cart, Long> {
-
-
+public interface CartRepository extends JpaRepository<Cart, Integer> {
 }

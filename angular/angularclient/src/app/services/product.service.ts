@@ -8,6 +8,8 @@ import {Product} from '../model/Product';
 })
 export class ProductService {
 
+
+    ///////////////////////////////////////PO STAREMU ///////////////////////////////////////
   private productUrl: string;
 
   constructor(private http: HttpClient) {

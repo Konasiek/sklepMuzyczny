@@ -1,50 +1,80 @@
 package com.sklepmuzyczny.demo.controller;
 
-import com.sklepmuzyczny.demo.DTO.UserDTO;
+import com.sklepmuzyczny.demo.http.request.LoginForm;
+import com.sklepmuzyczny.demo.http.response.JwtResponse;
 import com.sklepmuzyczny.demo.model.User;
+import com.sklepmuzyczny.demo.security.JwtProvider;
 import com.sklepmuzyczny.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
 
-import java.util.List;
-
+@CrossOrigin
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/user")
 public class UserController {
 
+    @Autowired
     UserService userService;
 
+    @Autowired
+    JwtProvider jwtProvider;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginForm loginForm) {
+        // throws Exception if authentication failed
+
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtProvider.generate(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            User user = userService.findOne(userDetails.getUsername());
+            return ResponseEntity.ok(new JwtResponse(jwt, user.getEmail(), user.getName(), user.getRole()));
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<User> getAllUser () {
-        List<User> list = userService.getUsers();
-        return list;
-    }
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User getUserById(@PathVariable("id") Long id) {
-        User user = userService.getUserById(id);
-        return user;
-    }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteUser(@PathVariable("id") long id) {
-        userService.deleteById(id);
+    @PostMapping("/register")
+    public ResponseEntity<User> save(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(userService.save(user));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @PostMapping("/addUser")
-    public User addUser(@RequestBody UserDTO userDTO) {
+    @PutMapping("/profile")
+    public ResponseEntity<User> update(@RequestBody User user, Principal principal) {
 
-        User user = new User();
-        user.setPassword(userDTO.getPassword());
-        user.setUsername(userDTO.getUsername());
-        user.setUserId(userDTO.getUserId());
+        try {
+            if (!principal.getName().equals(user.getEmail())) throw new IllegalArgumentException();
+            return ResponseEntity.ok(userService.update(user));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
-        userService.addNewUser(user);
-        return user;
+    @GetMapping("/profile/{email}")
+    public ResponseEntity<User> getProfile(@PathVariable("email") String email, Principal principal) {
+        if (principal.getName().equals(email)) {
+            return ResponseEntity.ok(userService.findOne(email));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }

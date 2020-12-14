@@ -1,49 +1,63 @@
 package com.sklepmuzyczny.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class Cart {
-
+public class Cart implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartId;
-    private Double totalPrice;
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long cartId;
 
-    @OneToMany
-    private List<Product> products;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JsonIgnore
+//    @JoinColumn(name = "email", referencedColumnName = "email")
+    private User user;
 
-    public Cart() {
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, orphanRemoval = true,
+            mappedBy = "cart")
+    private Set<ProductInOrder> products = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cartId=" + cartId +
+                ", products=" + products +
+                '}';
     }
 
-    public Cart(Double totalPrice, List<Product> products) {
-        this.totalPrice = totalPrice;
-        this.products = products;
+    public Cart(User user) {
+        this.user  = user;
     }
 
-    public Long getCartId() {
+    public long getCartId() {
         return cartId;
     }
 
-    public void setCartId(Long cartId) {
+    public void setCartId(long cartId) {
         this.cartId = cartId;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
+    public User getUser() {
+        return user;
     }
 
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public List<Product> getProducts() {
+    public Set<ProductInOrder> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(Set<ProductInOrder> products) {
         this.products = products;
     }
 }

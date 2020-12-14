@@ -1,85 +1,62 @@
 package com.sklepmuzyczny.demo.service;
 
+import com.sklepmuzyczny.demo.model.Cart;
 import com.sklepmuzyczny.demo.model.User;
-import com.sklepmuzyczny.demo.model.Role;
+import com.sklepmuzyczny.demo.repository.CartRepository;
 import com.sklepmuzyczny.demo.repository.UserRepository;
-import com.sklepmuzyczny.demo.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.Collection;
 
 @Service
-public class UserService implements UserDetailsService {
-
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+@DependsOn("passwordEncoder")
+public class UserService {
 
     @Autowired
-    public UserService(UserRepository userRepository,
-                       RoleRepository roleRepository,
-                       PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    CartRepository cartRepository;
+
+    public User findOne(String email) {
+        return userRepository.findByEmail(email);
     }
 
-    public void addNewUser(User user) {
+    public Collection<User> findByRole(String role) {
+        return userRepository.findAllByRole(role);
+    }
+
+    @Transactional
+    public User save(User user) throws Exception {
+        //register
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
-        user.setEnabled(true);
+        try {
+            User savedUser = userRepository.save(user);
 
-        Optional<Role> userRole = Optional.ofNullable(roleRepository.findByRole("USER"));
+            // initial Cart
+            Cart savedCart = cartRepository.save(new Cart(savedUser));
+            savedUser.setCart(savedCart);
+            return userRepository.save(savedUser);
 
-        if (!userRole.isPresent()) {
-            Role roleUser = new Role();
-            roleUser.setRole("USER");
-            user.setRoles(new HashSet<Role>(Arrays.asList(roleUser)));
-
-        } else {
-            user.setRoles(new HashSet<Role>(Arrays.asList(userRole.get())));
+        } catch (Exception e) {
+            throw new Exception("Validation error");
         }
 
-        userRepository.save(user);
     }
 
-    public List<User> getUsers() {
-        List<User> list = (List) userRepository.findAll();
-        return list;
+    @Transactional
+    public User update(User user) {
+        User oldUser = userRepository.findByEmail(user.getEmail());
+        oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        oldUser.setName(user.getName());
+        oldUser.setPhone(user.getPhone());
+        oldUser.setAddress(user.getAddress());
+        return userRepository.save(oldUser);
     }
 
-    public User getUserById(Long id) {
-        User user = (User) userRepository.findById(id).get();
-        return user;
-    }
-
-//    public void saveUser(User user) {
-//
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        Role userRole = roleRepository.findByRole("ADMIN");
-//        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-//
-//        userRepository.save(user);
-//    }
-
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUsers = userRepository.findByUsername(username);
-        optionalUsers.orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found"));
-        return optionalUsers.get();
-    }
 }

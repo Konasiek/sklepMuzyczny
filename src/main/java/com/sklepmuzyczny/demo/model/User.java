@@ -1,72 +1,71 @@
 package com.sklepmuzyczny.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.io.Serializable;
 
 @Entity
-public class User implements UserDetails {
+@Table(name = "users")
+public class User implements Serializable {
 
+    private static final long serialVersionUID = 4887904943282174032L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @Email
+    @NaturalId
+    @NotEmpty
     private String email;
-
-    @NotBlank
-    private String username;
-
-    @JsonIgnore
-    @Length(min = 5, message = "*Your's password have to has at least 5 characters length")
-    @NotBlank(message = "*Please provide your password")
+    @NotEmpty
+    @Size(min = 3, message = "Length must be more than 3")
     private String password;
+    @NotEmpty
+    private String name;
+    @NotEmpty
+    private String phone;
+    @NotEmpty
+    private String address;
+    @NotNull
+    private boolean active;
+    @NotEmpty
+    private String role = "ROLE_CUSTOMER";
 
-    private boolean isAccountNonExpired;
-    private boolean isAccountNonLocked;
-    private boolean isCredentialsNonExpired;
-    private boolean isEnabled;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore  // fix bi-direction toString() recursion problem
+    private Cart cart;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
-
-    @OneToOne
-    private Delivery delivery;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", active=" + active +
+                ", role='" + role + '\'' +
+                '}';
+    }
 
     public User() {
     }
 
-    public User(Long userId, String username, String password) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
-                .collect(Collectors.toList());
+    public Long getId() {
+        return id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -77,16 +76,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
     public String getPassword() {
         return password;
     }
@@ -95,55 +84,52 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
+    public String getName() {
+        return name;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        isAccountNonExpired = accountNonExpired;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        isAccountNonLocked = accountNonLocked;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        isCredentialsNonExpired = credentialsNonExpired;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return isEnabled;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public Delivery getDelivery() {
-        return delivery;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
+
